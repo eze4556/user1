@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Lista Aplicaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content-background">
+
+  <!-- Mostrar APKs -->
+  <ion-list *ngIf="apks.length > 0">
+    <ion-item *ngFor="let apk of apks">
+      <ion-label>
+        <h2>{{ apk.nombre }}</h2>
+        <p>{{ apk.descripcion }}</p>
+        <img *ngIf="apk.imagenUrl" [src]="apk.imagenUrl" alt="{{ apk.nombre }}" style="max-width: 100px;"/>
+      </ion-label>
+
+
+
+ <ion-button fill="outline" color="success" (click)="handleEnter(apk.apkUrl)">
+      <ion-icon slot="icon-only" name="download-outline"></ion-icon>
+      Descargar
+    </ion-button>
+
+    </ion-item>
+  </ion-list>
+
+  <ion-text *ngIf="apks.length === 0" color="medium" style="text-align: center; display: block;">No hay APKs subidos.</ion-text>
+</ion-content>
