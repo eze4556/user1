@@ -241,17 +241,14 @@ navigateToNextElement(currentFocus: Element | null, direction: string) {
   }
 }
 
-// Acción cuando se presiona Enter o OK para descargar un APK
+
 handleEnter(apkUrl: string) {
   if (apkUrl) {
-    const anchor = document.createElement('a');
-    anchor.href = apkUrl;
-    anchor.setAttribute('download', '');
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+    // Abrir el archivo APK en una nueva pestaña, el sistema debería manejar la descarga
+    window.open(apkUrl, '_blank');
   }
 }
+
 
 
 

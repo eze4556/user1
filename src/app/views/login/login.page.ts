@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AlertController} from '@ionic/angular';
+// import { AlertController} from '@ionic/angular';
 import { AuthService } from '../../common/services/auth.service';
 
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonCard, IonInput, IonSpinner, IonButtons, IonButton, IonIcon, IonImg , IonCardHeader, IonCardContent, IonCardTitle} from '@ionic/angular/standalone';
@@ -47,7 +47,7 @@ loginForm: FormGroup;
   constructor(
       private firestoreService: FirestoreService,
     private router: Router,
-    private alertController: AlertController,
+    // private alertController: AlertController,
     private fb: FormBuilder,
     // private auth: Auth
   ) {
@@ -68,21 +68,21 @@ loginForm: FormGroup;
           const userId = localStorage.getItem('userId');
           console.log('Inicio de sesión exitoso:', userId);
           this.loginSuccess = true;
-          await this.mostrarAlerta('Éxito', 'Inicio de sesión exitoso.');
+          // await this.mostrarAlerta('Éxito', 'Inicio de sesión exitoso.');
 
           setTimeout(() => {
             this.router.navigateByUrl('/aplicaciones');
           }, 1000);
         } else {
           this.loginError = true;
-          this.mostrarAlertaError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+          // this.mostrarAlertaError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
         }
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
-        this.mostrarAlertaError('Ocurrió un error al iniciar sesión.');
+        // this.mostrarAlertaError('Ocurrió un error al iniciar sesión.');
       }
     } else {
-      this.mostrarAlertaError('Por favor, completa todos los campos correctamente.');
+      // this.mostrarAlertaError('Por favor, completa todos los campos correctamente.');
     }
   }
 
@@ -90,23 +90,23 @@ loginForm: FormGroup;
 
 
 
-  // Función para mostrar una alerta de error
-  async mostrarAlertaError(mensaje: string) {
-    const alert = await this.alertController.create({
-      header: 'Error',
-      message: mensaje,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
 
-  // Función para mostrar una alerta de éxito
-  async mostrarAlerta(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['OK']
-    });
-    await alert.present();
-  }
+  // async mostrarAlertaError(mensaje: string) {
+  //   const alert = await this.alertController.create({
+  //     header: 'Error',
+  //     message: mensaje,
+  //     buttons: ['OK']
+  //   });
+  //   await alert.present();
+  // }
+
+
+  // async mostrarAlerta(header: string, message: string) {
+  //   const alert = await this.alertController.create({
+  //     header,
+  //     message,
+  //     buttons: ['OK']
+  //   });
+  //   await alert.present();
+  // }
 }
