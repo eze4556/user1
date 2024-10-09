@@ -36,7 +36,7 @@ export const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'aplicaciones',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
 ];
