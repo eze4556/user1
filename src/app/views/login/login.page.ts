@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -44,6 +44,7 @@ loginForm: FormGroup;
   loginError: boolean = false;
   loginSuccess: boolean = false;
 
+
   constructor(
       private firestoreService: FirestoreService,
     private router: Router,
@@ -55,6 +56,52 @@ loginForm: FormGroup;
       dni: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+
+
+     // Añadimos el listener para los eventos del control remoto
+    this.setupRemoteControlNavigation();
+  }
+
+
+  // Función para manejar la navegación con el control remoto
+  setupRemoteControlNavigation() {
+    document.addEventListener('keydown', (event) => {
+      const key = event.key;
+      const focusedElement = document.activeElement as HTMLElement;
+
+      if (key === 'ArrowDown') {
+        // Navegar al siguiente elemento
+        this.focusNextElement(focusedElement);
+      } else if (key === 'ArrowUp') {
+        // Navegar al elemento anterior
+        this.focusPreviousElement(focusedElement);
+      } else if (key === 'Enter') {
+        // Simular un click cuando se presiona Enter
+        focusedElement?.click();
+      }
+    });
+  }
+
+  // Función para mover el foco al siguiente elemento
+  focusNextElement(currentElement: HTMLElement) {
+    const allFocusableElements = this.getFocusableElements();
+    const currentIndex = allFocusableElements.indexOf(currentElement);
+    const nextIndex = (currentIndex + 1) % allFocusableElements.length;
+    allFocusableElements[nextIndex]?.focus();
+  }
+
+  // Función para mover el foco al elemento anterior
+  focusPreviousElement(currentElement: HTMLElement) {
+    const allFocusableElements = this.getFocusableElements();
+    const currentIndex = allFocusableElements.indexOf(currentElement);
+    const previousIndex = (currentIndex - 1 + allFocusableElements.length) % allFocusableElements.length;
+    allFocusableElements[previousIndex]?.focus();
+  }
+
+  // Obtener todos los elementos que son focusables
+  getFocusableElements(): HTMLElement[] {
+    return Array.from(document.querySelectorAll('input, button')) as HTMLElement[];
   }
 
 
@@ -88,25 +135,19 @@ loginForm: FormGroup;
 
 
 
+  // Variable para controlar si el mensaje se muestra o no
+  showMessage: boolean = false;
 
 
+ // Mostrar el mensaje de "Olvidé Mi Contraseña"
+  showForgotPasswordMessage() {
+    this.showMessage = true;
+  }
 
-  // async mostrarAlertaError(mensaje: string) {
-  //   const alert = await this.alertController.create({
-  //     header: 'Error',
-  //     message: mensaje,
-  //     buttons: ['OK']
-  //   });
-  //   await alert.present();
-  // }
+  // Ocultar el mensaje de "Olvidé Mi Contraseña"
+  closeForgotPasswordMessage() {
+    this.showMessage = false;
+  }
 
 
-  // async mostrarAlerta(header: string, message: string) {
-  //   const alert = await this.alertController.create({
-  //     header,
-  //     message,
-  //     buttons: ['OK']
-  //   });
-  //   await alert.present();
-  // }
 }
